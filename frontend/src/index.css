@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-cotton font-sans text-[15px] text-noir antialiased; }
+  h1, h2, h3 { text-wrap: balance; }
+  :focus-visible { @apply outline outline-2 outline-offset-2 outline-cherry; }
+
+  /* checkboxes and radios in the site style instead of the browser default */
+  input[type='checkbox'], input[type='radio'] {
+    @apply grid h-[18px] w-[18px] flex-none cursor-pointer appearance-none place-items-center border-[1.5px] border-ink-3 bg-card transition;
+  }
+  input[type='checkbox'] { @apply rounded-[5px]; }
+  input[type='radio'] { @apply rounded-full; }
+  input[type='checkbox']:hover, input[type='radio']:hover { @apply border-noir; }
+  input[type='checkbox']:checked, input[type='radio']:checked { @apply border-cherry bg-cherry; }
+  input[type='checkbox']:checked::after {
+    content: ''; width: 10px; height: 10px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-5' fill='none' stroke='%23EDEBDE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  }
+  input[type='radio']:checked::after { content: ''; @apply h-1.5 w-1.5 rounded-full bg-cotton; }
+  input[type='date'] { @apply cursor-pointer; color-scheme: light; }
+  input[type='date']::-webkit-calendar-picker-indicator { @apply cursor-pointer opacity-60 hover:opacity-100; }
+}
+
+/* the few building blocks every screen uses */
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-[10px] bg-cherry px-5 py-2.5 text-sm font-semibold text-cotton transition hover:bg-cherry-dark active:translate-y-px disabled:pointer-events-none disabled:opacity-45; }
+  .btn-ghost { @apply btn border-[1.5px] border-noir bg-transparent text-noir hover:bg-noir hover:text-cotton; }
+  .btn-light { @apply btn bg-cotton text-cherry hover:bg-white; }
+  .btn-sm { @apply px-3.5 py-2 text-[13px]; }
+  .link { @apply font-semibold text-cherry underline underline-offset-[3px]; }
+  .input { @apply w-full min-w-0 rounded-lg border-[1.5px] border-line bg-card px-3 py-2.5 outline-none transition focus:border-cherry; }
+  .input-bad { @apply border-cherry bg-[#F8ECE8]; }
+  .input-good { @apply border-ok; }
+  .label { @apply text-[12.5px] font-semibold text-ink-2; }
+  .panel { @apply rounded-[14px] border-[1.5px] border-line bg-card p-5; }
+  .pill { @apply inline-flex items-center gap-1 whitespace-nowrap rounded-md bg-tint px-2.5 py-0.5 text-xs font-semibold; }
+  .display { @apply font-display font-semibold tracking-[-0.01em]; }
+  .iconbtn { @apply relative grid h-10 w-10 place-items-center rounded-[10px] border-[1.5px] border-line bg-card transition hover:border-noir; }
+  .badge { @apply absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-cherry px-1 text-[11px] font-bold text-cotton; }
+  .th { @apply whitespace-nowrap border-b-[1.5px] border-line bg-card px-3 py-2.5 text-left text-[12.5px] font-bold text-ink-2; }
+  .td { @apply border-b border-line px-3 py-2.5 align-middle; }
+}
+
+/* hand-drawn underline under section titles, same as the prototype */
+.squiggle { position: relative; padding-bottom: 8px; }
+.squiggle::after {
+  content: ""; position: absolute; left: 0; bottom: -2px; width: 86px; height: 9px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 86 9'%3E%3Cpath d='M2 6.2c9-3.1 18.5-3.6 27.4-1.9 7.6 1.4 14.2 2.8 22.6 1.3 8.3-1.5 16.6-3.8 31.6-2.4' fill='none' stroke='%23810100' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left/contain;
+}
+
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+.shake { animation: shake .3s; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
